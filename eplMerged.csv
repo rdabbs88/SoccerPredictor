@@ -1,4 +1,4 @@
-,Squad,W,D,L,GD,Attendance,# Pl,Age,Poss,G+A,CrdY,CrdR,PrgC,PrgP,Sh,SoT,G/Sh,Dist,Total Cmp%,Short Cmp%,Medium Cmp%,Long Cmp%,TO,Fld
+,Squad,W,D,L,GD,Attendance,num_players,Age,Poss,G_A,CrdY,CrdR,PrgC,PrgP,Sh,SoT,G_per_Sh,Dist,Total_Cmp,Short_Cmp,Medium_Cmp,Long_Cmp,TO,Fld
 0,Arsenal,18,14,4,33,60256,25,26.6,56.9,116,67,6,806,1738,509,167,0.12,15.0,84.3,91.7,89.1,51.3,46,34
 1,Aston Villa,18,9,9,7,42070,28,27.8,50.6,97,73,3,678,1254,454,151,0.11,16.2,82.7,90.2,88.9,53.1,48,38
 2,Bournemouth,14,11,11,12,10587,29,25.9,48.3,93,94,2,719,1411,546,183,0.09,16.7,76.5,86.4,84.6,48.2,40,38

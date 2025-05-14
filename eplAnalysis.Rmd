@@ -30,22 +30,22 @@ Response variable (Y): Wins ("W")
 Potential Predictor variables (X): 
 -Goal Difference ("GD")
 -Attendance (per game)
--Number of players (# Pl)
+-Number of players ("num_players")
 -Age (average age for a team)
 -Possession ("Poss")
--Goals + Assists ("G+A")
+-Goals + Assists ("G_A")
 -Yellow Cards ("CrdY")
 -Red Cards ("CrdR")
 -Progressive Carries ("PrgC")
 -Progressive passes ("PrgP")
 -Total Shots ("Sh")
 -Shots on Target ("SoT")
--Goals per shot ("G/Sh")
+-Goals per shot ("G_per_Sh")
 -Average Shot Distance ("Dist")
--Total Pass Completion Percentage ("Total Cmp%")
--Short Pass Completion Percentage ("Short Cmp%")
--Medium Pass Completion Percentage ("Medium Cmp%")
--Long Pass Completion Percentage ("Long Cmp%")
+-Total Pass Completion Percentage ("Total_Cmp")
+-Short Pass Completion Percentage ("Short_Cmp")
+-Medium Pass Completion Percentage ("Medium_Cmp")
+-Long Pass Completion Percentage ("Long_Cmp")
 -Successful Take-ons that lead to a shot attempt ("TO")
 -Fouls drawn that lead to a shot attempt ("Fld")
 
@@ -58,36 +58,49 @@ summary(epl_merged)
 
 ### Understanding the DataSet - Graphs
 ```{r}
-# Printing out relationship between Wins vs Goal Difference, Attendance, # of players, Age, Possession, Goals + Assists
-predictors1_6 <- c("GD", "Attendance", "# Pl", "Age", "Poss", "G+A")
+# Printing out relationship between Wins vs Goal Difference, Attendance, # of players, Age
+predictors1_4 <- c("GD", "Attendance", "num_players", "Age")
 par(mfrow=c(2,2))
-for (var in predictors1_6) {
+for (var in predictors1_4) {
     plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
     abline(lm(W~epl_merged[[var]], data=epl_merged))
 }
 
-# Printing out relationship between Wins vs Yellow Cards, Red Cards,
-predictors7_12 <- c("CrdY", "CrdR", "PrgC", "PrgP", "Sh", "SoT")
-for (var in predictors7_12) {
+# Printing out relationship between Wins vs Possession, Goals + Assists, Yellow Cards, Red Cards
+predictors5_8 <- c("Poss", "G_A", "CrdY", "CrdR")
+for (var in predictors5_8) {
     plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
     abline(lm(W~epl_merged[[var]], data=epl_merged))
 }
 
-# Printing out relationship between Wins vs Average Shot Distance, Total Pass Completion %, Short Pass Completion %, Medium Pass Completion %
-par(mfrow=c(2,2))
-predictors13_16 <- c("Dist", "Total Cmp%", "Short Cmp%", "Medium Cmp%")
+# Printing out relationship between Wins vs Progressive Carries, Progressive Passes, Total Shots, Shots on Target
+predictors9_12 <- c("PrgC", "PrgP", "Sh", "SoT")
+for (var in predictors9_12) {
+    plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
+    abline(lm(W~epl_merged[[var]], data=epl_merged))
+}
+
+
+# Printing out relationship between Wins vs Goals per shot, Average Shot Distance, Total Pass Completion %, Short Pass Completion %
+predictors13_16 <- c("G_per_Sh","Dist", "Total_Cmp", "Short_Cmp")
 for (var in predictors13_16) {
     plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
     abline(lm(W~epl_merged[[var]], data=epl_merged))
 }
 
-# Printing out relationship between Long Pass Completion %, Successful Take-ons that lead to a shot attempt, Fouls Drawn that lead to a shot attempt
-predictors17_19 <- c("Long Cmp%", "TO", "Fld")
-for (var in predictors17_19) {
+# Printing out relationship between Wins vs Medium Pass Completion %, Long Pass Completion %, Successful Take-ons that lead to a shot attempt, Fouls Drawn that lead to a shot attempt
+predictors17_20 <- c("Medium_Cmp", "Long_Cmp", "TO", "Fld")
+for (var in predictors17_20) {
     plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
     abline(lm(W~epl_merged[[var]], data=epl_merged))
 }
 
 ```
 
-### Fit a regression model 
+## Initial Modeling
+```{r}
+# getting all predictors to include in the initial model
+predictors <- c("GD", "Attendance", "num_players", "Age", "Poss", "G_A", "CrdY", "CrdR", "PrgC", "PrgP", "Sh", "SoT", "G_per_Sh", "Dist", "Total_Cmp", "Short_Cmp", "Medium_Cmp", "Long_Cmp", "TO", "Fld")
+
+```
+
