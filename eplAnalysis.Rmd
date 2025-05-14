@@ -1,0 +1,93 @@
+---
+title: "eplPredictor"
+output: html_document
+date: "2025-05-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Analysis of 2025 Premier League Results
+
+## Reading in and preparing the dataset
+```{r}
+# preparing the dataset
+library(readr)
+# read in the epl_merged csv file
+epl_merged <- read_csv("C:/Users/rache/Documents/CodingProjects/SoccerPredictor/eplMerged.csv")
+View(epl_merged)
+attach(epl_merged)
+# print out the names of the columns in the epl_merged dataset
+names(epl_merged)
+# get the dimensions of the dataset
+dim(epl_merged)
+```
+
+## Exploratory Data Analysis
+Response variable (Y): Wins ("W")
+
+Potential Predictor variables (X): 
+-Goal Difference ("GD")
+-Attendance (per game)
+-Number of players (# Pl)
+-Age (average age for a team)
+-Possession ("Poss")
+-Goals + Assists ("G+A")
+-Yellow Cards ("CrdY")
+-Red Cards ("CrdR")
+-Progressive Carries ("PrgC")
+-Progressive passes ("PrgP")
+-Total Shots ("Sh")
+-Shots on Target ("SoT")
+-Goals per shot ("G/Sh")
+-Average Shot Distance ("Dist")
+-Total Pass Completion Percentage ("Total Cmp%")
+-Short Pass Completion Percentage ("Short Cmp%")
+-Medium Pass Completion Percentage ("Medium Cmp%")
+-Long Pass Completion Percentage ("Long Cmp%")
+-Successful Take-ons that lead to a shot attempt ("TO")
+-Fouls drawn that lead to a shot attempt ("Fld")
+
+
+### Understanding the Dataset - Summary Statistics
+```{r}
+# generating summary statistics for each column
+summary(epl_merged)
+```
+
+### Understanding the DataSet - Graphs
+```{r}
+# Printing out relationship between Wins vs Goal Difference, Attendance, # of players, Age, Possession, Goals + Assists
+predictors1_6 <- c("GD", "Attendance", "# Pl", "Age", "Poss", "G+A")
+par(mfrow=c(2,2))
+for (var in predictors1_6) {
+    plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
+    abline(lm(W~epl_merged[[var]], data=epl_merged))
+}
+
+# Printing out relationship between Wins vs Yellow Cards, Red Cards,
+predictors7_12 <- c("CrdY", "CrdR", "PrgC", "PrgP", "Sh", "SoT")
+for (var in predictors7_12) {
+    plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
+    abline(lm(W~epl_merged[[var]], data=epl_merged))
+}
+
+# Printing out relationship between Wins vs Average Shot Distance, Total Pass Completion %, Short Pass Completion %, Medium Pass Completion %
+par(mfrow=c(2,2))
+predictors13_16 <- c("Dist", "Total Cmp%", "Short Cmp%", "Medium Cmp%")
+for (var in predictors13_16) {
+    plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
+    abline(lm(W~epl_merged[[var]], data=epl_merged))
+}
+
+# Printing out relationship between Long Pass Completion %, Successful Take-ons that lead to a shot attempt, Fouls Drawn that lead to a shot attempt
+predictors17_19 <- c("Long Cmp%", "TO", "Fld")
+for (var in predictors17_19) {
+    plot(epl_merged[[var]], epl_merged$W, xlab=var, ylab="Wins", main=paste("w vs", var))
+    abline(lm(W~epl_merged[[var]], data=epl_merged))
+}
+
+```
+
+### Fit a regression model 
